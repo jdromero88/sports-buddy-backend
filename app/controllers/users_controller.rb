@@ -11,15 +11,43 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find params[:id]
-    render json: @user
+    if @user
+      render json: @user
+    else
+      render json:{
+        error:true,
+        message:'No Users to show.'
+      }
+    end
   end
 
   def update
-
+    @user = User.find params[:id]
+    if @user
+      @user.update!(user_strong_params)
+      render json: @user
+    else
+      render json:{
+        error:true,
+        message:'Something went wrong.'
+      }
+    end
   end
 
   def destroy
-
+    @user = User.find params[:id]
+    if @user
+      @user.destroy
+      render json:{
+        error:false,
+        message: `#{@user} deleted.`
+      }
+    else
+      render json:{
+        error:true,
+        message:'Something went wrong.'
+      }
+    end
   end
 
   private
