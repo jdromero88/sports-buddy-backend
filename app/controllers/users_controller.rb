@@ -35,19 +35,20 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find params[:id]
+    @user = User.find(params[:id])
     if @user
-      @user.destroy
-      render json:{
-        error:false,
-        message: `#{@user} deleted.`
-      }
-    else
+      if @user.destroy
+        render json:{
+          error:false,
+          message: `#{@user} deleted.`
+        }
+      end
       render json:{
         error:true,
         message:'Something went wrong.'
       }
     end
+    render json: {error: false, message: "User not found."}
   end
 
 

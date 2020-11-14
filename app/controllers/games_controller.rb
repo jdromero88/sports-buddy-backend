@@ -44,7 +44,7 @@ class GamesController < ApplicationController
       }
     else
       render json:{
-        error:true,
+        error: true,
         message: 'Something went wrong.'
       }
     end
