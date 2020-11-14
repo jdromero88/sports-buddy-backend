@@ -6,7 +6,20 @@ class UserGamesController < ApplicationController
 
   def create
     @user_game = UserGame.create(user_game_strong_params)
-    render json: user_game.to_json(serialized_data)
+    render json: @user_game.to_json(serialized_data)
+  end
+
+  def show
+    @user_game = UserGame.find(params[:id])
+    if @user_game
+      render json: @user_game.to_json(serialized_data)
+    end
+    render json: {message: "Game not found."}
+  end
+
+  def count
+    @games_count = UserGame.where(user_id: params[:id]).count
+    render json: @games_count
   end
 
   private
@@ -17,5 +30,4 @@ class UserGamesController < ApplicationController
     def user_game_strong_params
       params.require(:user_game).permit(:user_id, :game_id)
     end
-
 end
