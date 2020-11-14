@@ -59,7 +59,12 @@ class UsersController < ApplicationController
       end
       render json:  {message: 'Invalid username or password. Please check.'}
     end
-    render json:{message: "User doesn't exist. Create and account"}  
+    render json:{message: "User doesn't exist. Create and account"}
+  end
+
+  def logout
+    @user = null
+    render json: {message: "User logout."}
   end
 
   private
