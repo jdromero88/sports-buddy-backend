@@ -50,6 +50,18 @@ class UsersController < ApplicationController
     end
   end
 
+
+  def login
+    @user = User.find_by(username: params[:username])
+    if @user
+      if @user.password_digest === params[:password]
+        render json: @user
+      end
+      render json:  {message: 'Invalid username or password. Please check.'}
+    end
+    render json:{message: "User doesn't exist. Create and account"}  
+  end
+
   private
     def user_strong_params
       params.require(:user).permit(:first_name,
